@@ -1,0 +1,206 @@
+{% extends "base.html" %}
+
+{% block title %}VaaniSense — Indian Multilingual Sentiment Analysis using IndicBERT{% endblock %}
+
+{% block content %}
+
+<!-- ==================== HERO ==================== -->
+<section class="vs-hero">
+    <div class="vs-hero-blob vs-hero-blob-1"></div>
+    <div class="vs-hero-blob vs-hero-blob-2"></div>
+
+    <div class="container">
+        <div class="row align-items-center gy-5">
+            <div class="col-lg-6 vs-hero-content">
+                <span class="vs-eyebrow vs-fade-in-up">
+                    <i class="fa-solid fa-graduation-cap"></i> Master's Project &middot; NLP &amp; Deep Learning
+                </span>
+
+                <h1 class="vs-hero-title vs-fade-in-up vs-fade-in-up-delay-1">
+                    Understand sentiment across
+                    <span class="vs-text-gradient">India's languages</span> —
+                    in one model.
+                </h1>
+
+                <p class="vs-hero-subtitle vs-fade-in-up vs-fade-in-up-delay-2">
+                    VaaniSense uses a fine-tuned <strong>IndicBERT</strong> transformer to classify sentiment
+                    in 12 major Indian languages, giving you an instant prediction, a confidence score,
+                    and a full probability breakdown — for every sentence you analyze.
+                </p>
+
+                <div class="vs-hero-actions vs-fade-in-up vs-fade-in-up-delay-3">
+                    <a href="{{ url_for('language') }}" class="btn vs-btn-primary vs-btn-lg">
+                        Get Started <i class="fa-solid fa-arrow-right ms-2"></i>
+                    </a>
+                    <a href="{{ url_for('history') }}" class="btn vs-btn-outline vs-btn-lg">
+                        <i class="fa-solid fa-clock-rotate-left me-2"></i> View History
+                    </a>
+                </div>
+
+                <div class="vs-hero-chip-row">
+                    <span class="vs-lang-chip vs-float">हिन्दी <span class="vs-lang-native">Hindi</span></span>
+                    <span class="vs-lang-chip vs-float-slow">தமிழ் <span class="vs-lang-native">Tamil</span></span>
+                    <span class="vs-lang-chip vs-float">বাংলা <span class="vs-lang-native">Bengali</span></span>
+                    <span class="vs-lang-chip vs-float-slow">+9 more</span>
+                </div>
+            </div>
+
+            <div class="col-lg-6 vs-hero-visual">
+                <div class="vs-hero-panel vs-fade-in-up vs-fade-in-up-delay-2">
+                    <div class="vs-hero-panel-header">
+                        <div>
+                            <span class="vs-hero-panel-dot" style="background:#EF4444;"></span>
+                            <span class="vs-hero-panel-dot" style="background:#F59E0B;"></span>
+                            <span class="vs-hero-panel-dot" style="background:#22C55E;"></span>
+                        </div>
+                        <span class="vs-badge-lang">Hindi</span>
+                    </div>
+
+                    <div class="vs-hero-sample-text">
+                        "यह फिल्म वाकई शानदार थी, मुझे बहुत पसंद आई!"
+                    </div>
+
+                    <div class="vs-hero-result-row mb-3">
+                        <span><i class="fa-solid fa-face-smile me-2"></i>Positive</span>
+                        <span>98% confidence</span>
+                    </div>
+
+                    <div class="vs-progress mb-2">
+                        <div class="vs-progress-bar vs-progress-bar-positive" style="width: 98%;"></div>
+                    </div>
+                    <p class="vs-text-muted mb-0" style="font-size:0.85rem;">
+                        Powered by IndicBERT &middot; Analyzed in under a second
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== PROJECT INTRODUCTION ==================== -->
+<section class="vs-section">
+    <div class="container">
+        <div class="row align-items-center gy-5">
+            <div class="col-lg-6 vs-reveal">
+                <span class="vs-eyebrow">About the Project</span>
+                <h2 class="vs-section-title">Why sentiment analysis needs a multilingual lens</h2>
+                <p class="vs-section-subtitle">
+                    Most sentiment models are trained almost exclusively on English text, leaving out the
+                    hundreds of millions of people who write and speak in Hindi, Tamil, Bengali, Telugu,
+                    and India's many other languages.
+                </p>
+                <p class="vs-text-muted">
+                    This project fine-tunes <strong>IndicBERT</strong> — a transformer pretrained on a large
+                    corpus of Indian-language text — to classify sentence-level sentiment as
+                    <strong>Positive</strong> or <strong>Negative</strong> across 12 languages, without relying
+                    on machine translation as an intermediate step.
+                </p>
+                <a href="{{ url_for('about') }}" class="vs-btn-ghost">
+                    Read the full technical write-up <i class="fa-solid fa-arrow-right ms-1"></i>
+                </a>
+            </div>
+
+            <div class="col-lg-6 vs-reveal">
+                <div class="row g-3">
+                    <div class="col-6">
+                        <div class="vs-card p-4 text-center">
+                            <h3 class="vs-text-gradient mb-1">12</h3>
+                            <p class="vs-text-muted mb-0" style="font-size:0.9rem;">Languages supported</p>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="vs-card p-4 text-center">
+                            <h3 class="vs-text-gradient mb-1">2</h3>
+                            <p class="vs-text-muted mb-0" style="font-size:0.9rem;">Sentiment classes</p>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="vs-card p-4 text-center">
+                            <h3 class="vs-text-gradient mb-1">&lt;1s</h3>
+                            <p class="vs-text-muted mb-0" style="font-size:0.9rem;">Average inference time</p>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="vs-card p-4 text-center">
+                            <h3 class="vs-text-gradient mb-1">BERT</h3>
+                            <p class="vs-text-muted mb-0" style="font-size:0.9rem;">Transformer architecture</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== FEATURES ==================== -->
+<section class="vs-section" style="background: var(--vs-primary-light);">
+    <div class="container">
+        <div class="text-center mx-auto mb-5 vs-reveal" style="max-width: 640px;">
+            <span class="vs-eyebrow">What You Get</span>
+            <h2 class="vs-section-title">Everything you need to explore sentiment</h2>
+            <p class="vs-section-subtitle mx-auto">
+                A focused toolkit built around one job — analyzing sentiment across Indian languages — done well.
+            </p>
+        </div>
+
+        <div class="row g-4" data-reveal-group="features">
+            <div class="col-md-6 col-lg-3 vs-reveal">
+                <div class="vs-feature-card">
+                    <div class="vs-feature-icon"><i class="fa-solid fa-brain"></i></div>
+                    <h3 class="vs-feature-title">IndicBERT-Powered</h3>
+                    <p class="vs-feature-text">A transformer pretrained on Indian-language text, fine-tuned specifically for sentiment classification.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3 vs-reveal">
+                <div class="vs-feature-card">
+                    <div class="vs-feature-icon"><i class="fa-solid fa-language"></i></div>
+                    <h3 class="vs-feature-title">12 Languages</h3>
+                    <p class="vs-feature-text">From Hindi and Bengali to Odia and Assamese — analyze text natively, no translation step required.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3 vs-reveal">
+                <div class="vs-feature-card">
+                    <div class="vs-feature-icon"><i class="fa-solid fa-chart-simple"></i></div>
+                    <h3 class="vs-feature-title">Confidence Scores</h3>
+                    <p class="vs-feature-text">Every prediction includes a full probability breakdown, not just a single label.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3 vs-reveal">
+                <div class="vs-feature-card">
+                    <div class="vs-feature-icon"><i class="fa-solid fa-clock-rotate-left"></i></div>
+                    <h3 class="vs-feature-title">Prediction History</h3>
+                    <p class="vs-feature-text">Every analysis is saved to a searchable, filterable, exportable history log.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== SUPPORTED LANGUAGES ==================== -->
+<section class="vs-section">
+    <div class="container">
+        <div class="text-center mx-auto mb-5 vs-reveal" style="max-width: 640px;">
+            <span class="vs-eyebrow">Coverage</span>
+            <h2 class="vs-section-title">Supported languages</h2>
+            <p class="vs-section-subtitle mx-auto">
+                Pick any of the 12 languages below on the next step to start analyzing text.
+            </p>
+        </div>
+
+        <div class="d-flex flex-wrap justify-content-center gap-3" data-reveal-group="languages">
+            {% for lang in supported_languages %}
+                <span class="vs-lang-chip vs-reveal">
+                    {{ lang.native }} <span class="vs-lang-native">{{ lang.label }}</span>
+                </span>
+            {% endfor %}
+        </div>
+
+        <div class="text-center mt-5 vs-reveal">
+            <a href="{{ url_for('language') }}" class="btn vs-btn-primary vs-btn-lg">
+                Choose a Language <i class="fa-solid fa-arrow-right ms-2"></i>
+            </a>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,24 @@
+# Python
+pycache/
+*.py[cod]
+
+# Virtual Environment
+.venv/
+venv/
+env/
+
+# Environment Variables
+.env
+
+# VS Code
+.vscode/
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+
+# AI model files
+model/
+*.safetensors

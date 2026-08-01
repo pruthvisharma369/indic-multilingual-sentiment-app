@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}VaaniSense — Indian Multilingual Sentiment Analysis{% endblock %}</title>
+
+    <!-- Google Fonts: Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <!-- Project stylesheets -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/animations.css') }}">
+
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+
+    <!-- ==================== NAVBAR ==================== -->
+    <nav class="navbar navbar-expand-lg vs-navbar sticky-top">
+        <div class="container">
+            <a class="navbar-brand vs-brand" href="{{ url_for('home') }}">
+                <span class="vs-brand-icon"><i class="fa-solid fa-language"></i></span>
+                Vaani<span class="vs-brand-accent">Sense</span>
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#vsNavbarNav"
+                    aria-controls="vsNavbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+
+            <div class="collapse navbar-collapse" id="vsNavbarNav">
+                <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.endpoint == 'home' %}active{% endif %}" href="{{ url_for('home') }}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.endpoint == 'language' %}active{% endif %}" href="{{ url_for('language') }}">Languages</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.endpoint == 'analyze' %}active{% endif %}" href="{{ url_for('analyze') }}">Analyze</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.endpoint == 'history' %}active{% endif %}" href="{{ url_for('history') }}">History</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.endpoint == 'about' %}active{% endif %}" href="{{ url_for('about') }}">About</a>
+                    </li>
+                    <li class="nav-item ms-lg-3">
+                        <a class="btn vs-btn-primary vs-btn-sm" href="{{ url_for('analyze') }}">
+                            Get Started <i class="fa-solid fa-arrow-right ms-1"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ==================== FLASH MESSAGES ==================== -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="container mt-3">
+                {% for category, message in messages %}
+                    <div class="alert vs-alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                        <i class="fa-solid fa-circle-info me-2"></i>{{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <!-- ==================== PAGE CONTENT ==================== -->
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer class="vs-footer">
+        <div class="container">
+            <div class="row gy-4">
+                <div class="col-lg-4">
+                    <a class="vs-brand vs-brand-footer" href="{{ url_for('home') }}">
+                        <span class="vs-brand-icon"><i class="fa-solid fa-language"></i></span>
+                        Vaani<span class="vs-brand-accent">Sense</span>
+                    </a>
+                    <p class="vs-footer-tagline">
+                        A Master's project exploring transformer-based sentiment analysis
+                        across India's languages using IndicBERT.
+                    </p>
+                </div>
+
+                <div class="col-6 col-lg-2">
+                    <h6 class="vs-footer-heading">Navigate</h6>
+                    <ul class="vs-footer-links">
+                        <li><a href="{{ url_for('home') }}">Home</a></li>
+                        <li><a href="{{ url_for('language') }}">Languages</a></li>
+                        <li><a href="{{ url_for('analyze') }}">Analyze</a></li>
+                        <li><a href="{{ url_for('history') }}">History</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-6 col-lg-2">
+                    <h6 class="vs-footer-heading">Project</h6>
+                    <ul class="vs-footer-links">
+                        <li><a href="{{ url_for('about') }}">About IndicBERT</a></li>
+                        <li><a href="{{ url_for('about') }}#workflow">Workflow</a></li>
+                        <li><a href="{{ url_for('about') }}#stack">Tech Stack</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-4">
+                    <h6 class="vs-footer-heading">Supported Languages</h6>
+                    <p class="vs-footer-languages">
+                        Hindi &middot; English &middot; Gujarati &middot; Marathi &middot; Bengali &middot; Tamil
+                        &middot; Telugu &middot; Kannada &middot; Malayalam &middot; Punjabi &middot; Assamese &middot; Odia
+                    </p>
+                </div>
+            </div>
+
+            <hr class="vs-footer-divider">
+
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-center gap-2">
+                <p class="vs-footer-copy mb-0">&copy; {{ current_year }} VaaniSense &mdash; Indian Multilingual Sentiment Analysis using IndicBERT.</p>
+                <p class="vs-footer-copy mb-0">Built with Flask, IndicBERT &amp; Bootstrap 5</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS bundle (includes Popper) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Project scripts -->
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

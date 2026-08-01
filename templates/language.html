@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block title %}Choose a Language — VaaniSense{% endblock %}
+
+{% block content %}
+
+<section class="vs-section" style="padding-top: 3.5rem;">
+    <div class="container">
+
+        <div class="text-center mx-auto mb-5" style="max-width: 640px;">
+            <span class="vs-eyebrow"><i class="fa-solid fa-language"></i> Step 1 of 2</span>
+            <h1 class="vs-section-title">Which language is your text in?</h1>
+            <p class="vs-section-subtitle mx-auto">
+                Select a language below. This tells IndicBERT which model head to use so it can
+                read your sentence accurately.
+            </p>
+        </div>
+
+        <form id="vsLanguageForm" action="{{ url_for('language') }}" method="POST" novalidate>
+
+            <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-3 g-md-4" data-reveal-group="langcards">
+                {% for lang in supported_languages %}
+                    <div class="col vs-reveal">
+                        <div class="vs-lang-card-wrapper">
+                            <input
+                                type="radio"
+                                name="language"
+                                id="lang-{{ lang.code }}"
+                                value="{{ lang.code }}"
+                                class="visually-hidden vs-lang-radio"
+                                {% if session.get('selected_language') == lang.code %}checked{% endif %}
+                            >
+                            <label for="lang-{{ lang.code }}"
+                                   class="vs-lang-card {% if session.get('selected_language') == lang.code %}vs-lang-card-selected{% endif %}"
+                                   data-lang-card>
+                                <span class="vs-lang-card-check"><i class="fa-solid fa-check"></i></span>
+                                <span class="vs-lang-card-icon">{{ lang.label[0] }}</span>
+                                <div class="vs-lang-card-name">{{ lang.label }}</div>
+                                <div class="vs-lang-card-native">{{ lang.native }}</div>
+                            </label>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div class="d-flex flex-column flex-sm-row justify-content-between align-items-center gap-3 mt-5">
+                <p class="vs-text-muted mb-0" id="vsLanguageHint">
+                    <i class="fa-solid fa-circle-info me-1"></i> No language selected yet
+                </p>
+                <button type="submit" class="btn vs-btn-primary vs-btn-lg" id="vsLanguageNextBtn" disabled>
+                    Next: Enter Your Text <i class="fa-solid fa-arrow-right ms-2"></i>
+                </button>
+            </div>
+        </form>
+
+    </div>
+</section>
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/language.js') }}"></script>
+{% endblock %}

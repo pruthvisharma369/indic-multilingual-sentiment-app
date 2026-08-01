@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% block title %}Analyze Text — VaaniSense{% endblock %}
+
+{% block content %}
+
+<section class="vs-section" style="padding-top: 3.5rem;">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+
+                <div class="text-center mb-5">
+                    <span class="vs-eyebrow"><i class="fa-solid fa-pen-nib"></i> Step 2 of 2</span>
+                    <h1 class="vs-section-title">Analyze your text</h1>
+                    <p class="vs-section-subtitle mx-auto">
+                        Paste or type a sentence, confirm the language, and let IndicBERT classify its sentiment.
+                    </p>
+                </div>
+
+                <div class="vs-card p-4 p-md-5">
+
+                    <!-- Error alert (hidden until the API returns a problem) -->
+                    <div class="alert alert-danger vs-alert d-none" id="vsAnalyzeError" role="alert">
+                        <i class="fa-solid fa-triangle-exclamation me-2"></i>
+                        <span id="vsAnalyzeErrorText">Something went wrong.</span>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="vsLanguageSelect" class="vs-form-label">Language</label>
+                        <select id="vsLanguageSelect" class="form-select vs-form-control">
+                            {% for lang in supported_languages %}
+                                <option value="{{ lang.code }}" {% if lang.code == preselected_language %}selected{% endif %}>
+                                    {{ lang.label }} &middot; {{ lang.native }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="mb-2">
+                        <label for="vsTextArea" class="vs-form-label">Your text</label>
+                        <textarea
+                            id="vsTextArea"
+                            class="form-control vs-form-control"
+                            placeholder="Type or paste a sentence in the selected language..."
+                            maxlength="1000"
+                        ></textarea>
+                    </div>
+
+                    <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-4">
+                        <div class="d-flex gap-2 flex-wrap">
+                            <button type="button" class="vs-btn-ghost" id="vsSampleBtn">
+                                <i class="fa-solid fa-wand-magic-sparkles me-1"></i> Try a sample
+                            </button>
+                        </div>
+                        <span id="vsCharCounter" class="vs-char-counter">0 / 1000 characters</span>
+                    </div>
+
+                    <div class="d-flex flex-column flex-sm-row gap-3">
+                        <button type="button" class="btn vs-btn-outline w-100" id="vsClearBtn">
+                            <i class="fa-solid fa-eraser me-2"></i> Clear
+                        </button>
+                        <button type="button" class="btn vs-btn-primary w-100" id="vsAnalyzeBtn">
+                            <i class="fa-solid fa-magnifying-glass-chart me-2"></i> Analyze Sentiment
+                        </button>
+                    </div>
+
+                    <p class="vs-text-muted mt-4 mb-0" style="font-size: 0.85rem;">
+                        <i class="fa-solid fa-shield-halved me-1"></i>
+                        Text is analyzed on this server and stored only in your local prediction history.
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== LOADING OVERLAY ==================== -->
+<div class="vs-loading-overlay" id="vsLoadingOverlay">
+    <div class="vs-spinner"></div>
+    <p class="vs-loading-text">Analyzing with IndicBERT<span class="vs-dots ms-2"><span></span><span></span><span></span></span></p>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/analyze.js') }}"></script>
+{% endblock %}

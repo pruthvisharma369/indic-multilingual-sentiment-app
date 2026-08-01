@@ -1,0 +1,190 @@
+/* =============================================================================
+   animations.css
+   All keyframes + motion utility classes for VaaniSense.
+
+   Pairs with main.js, which:
+     - adds `.vs-reveal-visible` to `.vs-reveal` elements as they scroll into view
+     - toggles `.vs-float` on hero chips for a gentle ambient bob
+     - drives the loading spinner on the Analyze page
+
+   Respecting motion preferences is handled globally in style.css via
+   `@media (prefers-reduced-motion: reduce)`.
+   ============================================================================= */
+
+/* -----------------------------------------------------------------------------
+   Scroll reveal (fade + rise)
+   ----------------------------------------------------------------------------- */
+
+.vs-reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.vs-reveal-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Stagger helper classes — applied by main.js based on element index within a group */
+.vs-reveal-delay-1 { transition-delay: 0.08s; }
+.vs-reveal-delay-2 { transition-delay: 0.16s; }
+.vs-reveal-delay-3 { transition-delay: 0.24s; }
+.vs-reveal-delay-4 { transition-delay: 0.32s; }
+.vs-reveal-delay-5 { transition-delay: 0.4s; }
+.vs-reveal-delay-6 { transition-delay: 0.48s; }
+
+/* -----------------------------------------------------------------------------
+   Hero entrance (plays once on page load, no JS needed)
+   ----------------------------------------------------------------------------- */
+
+@keyframes vsFadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(28px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.vs-fade-in-up {
+    animation: vsFadeInUp 0.8s ease both;
+}
+
+.vs-fade-in-up-delay-1 { animation-delay: 0.12s; }
+.vs-fade-in-up-delay-2 { animation-delay: 0.24s; }
+.vs-fade-in-up-delay-3 { animation-delay: 0.36s; }
+
+/* -----------------------------------------------------------------------------
+   Ambient floating motion for hero blobs + language chips
+   ----------------------------------------------------------------------------- */
+
+@keyframes vsFloat {
+    0%   { transform: translateY(0px); }
+    50%  { transform: translateY(-10px); }
+    100% { transform: translateY(0px); }
+}
+
+.vs-float {
+    animation: vsFloat 5s ease-in-out infinite;
+}
+
+.vs-float-slow {
+    animation: vsFloat 7s ease-in-out infinite;
+}
+
+@keyframes vsBlobDrift {
+    0%   { transform: translate(0, 0) scale(1); }
+    50%  { transform: translate(-18px, 14px) scale(1.06); }
+    100% { transform: translate(0, 0) scale(1); }
+}
+
+.vs-hero-blob {
+    animation: vsBlobDrift 14s ease-in-out infinite;
+}
+
+.vs-hero-blob-2 {
+    animation-duration: 18s;
+    animation-direction: reverse;
+}
+
+/* -----------------------------------------------------------------------------
+   Loading spinner (Analyze page overlay)
+   ----------------------------------------------------------------------------- */
+
+@keyframes vsSpin {
+    to { transform: rotate(360deg); }
+}
+
+.vs-spinner {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    border: 5px solid var(--vs-primary-light);
+    border-top-color: var(--vs-primary);
+    animation: vsSpin 0.8s linear infinite;
+}
+
+/* Three-dot "thinking" indicator, used as an inline alternative to the spinner */
+.vs-dots {
+    display: inline-flex;
+    gap: 6px;
+    align-items: center;
+}
+
+.vs-dots span {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--vs-primary);
+    animation: vsDotPulse 1.2s ease-in-out infinite;
+}
+
+.vs-dots span:nth-child(2) { animation-delay: 0.15s; }
+.vs-dots span:nth-child(3) { animation-delay: 0.3s; }
+
+@keyframes vsDotPulse {
+    0%, 80%, 100% { opacity: 0.25; transform: scale(0.85); }
+    40% { opacity: 1; transform: scale(1.1); }
+}
+
+/* -----------------------------------------------------------------------------
+   Result page — emoji pop + progress bar grow-in
+   ----------------------------------------------------------------------------- */
+
+@keyframes vsPopIn {
+    0%   { opacity: 0; transform: scale(0.6); }
+    70%  { opacity: 1; transform: scale(1.08); }
+    100% { opacity: 1; transform: scale(1); }
+}
+
+.vs-pop-in {
+    animation: vsPopIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+.vs-progress-bar-animated {
+    width: 0 !important; /* JS sets the final width shortly after paint to trigger the transition */
+}
+
+/* -----------------------------------------------------------------------------
+   Button micro-interactions
+   ----------------------------------------------------------------------------- */
+
+@keyframes vsPulseRing {
+    0%   { box-shadow: 0 0 0 0 rgba(var(--vs-primary-rgb), 0.35); }
+    100% { box-shadow: 0 0 0 14px rgba(var(--vs-primary-rgb), 0); }
+}
+
+.vs-pulse-ring {
+    animation: vsPulseRing 1.8s ease-out infinite;
+}
+
+/* -----------------------------------------------------------------------------
+   Card hover lift used across feature/history/language cards
+   (base transform/shadow already defined in style.css; this keeps the
+   transition timing consistent and centralized)
+   ----------------------------------------------------------------------------- */
+
+.vs-card,
+.vs-feature-card,
+.vs-lang-card,
+.vs-lang-chip,
+.vs-table tbody tr {
+    will-change: transform;
+}
+
+/* -----------------------------------------------------------------------------
+   Fade transition helper for swapping content without a full page reload
+   (e.g. history table refreshing after a delete)
+   ----------------------------------------------------------------------------- */
+
+@keyframes vsFadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+.vs-fade-in {
+    animation: vsFadeIn 0.4s ease both;
+}
