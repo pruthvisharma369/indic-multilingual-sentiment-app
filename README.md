@@ -47,5 +47,6 @@ python app.py
 
 ## Author
 
-Pruthvi Sharma\n
+Pruthvi Sharma
+<br>
 Rohit Kumar
